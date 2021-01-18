@@ -1,0 +1,94 @@
+{
+  "name": "testcafe-framework",
+  "version": "1.0.0",
+  "description": "testcafe ui automation",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -r reports/** || true",
+    "lint": "eslint . --ext ts",
+    "lint:fix": "eslint . --ext ts --fix",
+    "tslint": "tslint './src/**/*.{ts,tsx}'",
+    "tslint:check": "tslint-config-prettier-check ./tslint.json",
+    "tslint:fix": "npm run tslint -- --fix",
+    "test": "node ./config.js",
+    "testcafe:test": "node ./config.devtest.js",
+    "testcafe:prod": "node ./config.prod.js",
+    "report": "node report-generator.js",
+    "docker:test:chrome": "docker run -u root -v ${PWD}:/tests -it testcafe/testcafe chromium /tests/**/*.spec.ts",
+    "docker:build:testcafe": "docker build -t testcafe -f docker/Dockerfile .",
+    "docker:stop:testcafe": "docker stop $(docker ps -qa --filter ancestor=testcafe)",
+    "docker:deleteAll": "docker rmi -f $(docker images -a -q)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svmudunuri/testcafe-framework.git"
+  },
+  "author": "sandeep mudunuri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/svmudunuri/testcafe-framework/issues"
+  },
+  "homepage": "https://github.com/svmudunuri/testcafe-framework#readme",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "file-system": "^2.2.2",
+    "load-json-file": "^6.2.0",
+    "moment": "^2.26.0",
+    "testcafe": "*",
+    "testcafe-reporter-html": "^1.4.6",
+    "typescript": "^4.0.3"
+  },
+  "devDependencies": {
+    "@types/faker": "^4.1.12",
+    "@types/jquery": "^3.3.38",
+    "@types/node": "^14.0.12",
+    "@typescript-eslint/eslint-plugin": "^3.0.2",
+    "@typescript-eslint/parser": "^3.0.2",
+    "allure-commandline": "^2.13.0",
+    "angular": "^1.7.9",
+    "cz-conventional-changelog": "2.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "eslint-plugin-testcafe": "^0.2.1",
+    "eslint-plugin-testing-library": "^3.9.2",
+    "eslint-plugin-unicorn": "^18.0.1",
+    "husky": "3.0.0",
+    "install": "^0.13.0",
+    "lint-staged": "9.2.0",
+    "log4js": "5.2.2",
+    "npm-failsafe": "^0.4.1",
+    "prettier": "2.0.5",
+    "pretty-quick": "1.11.1",
+    "rimraf": "^3.0.2",
+    "shelljs": "0.8.1",
+    "testcafe-reporter-allure": "^1.0.5",
+    "testcafe-reporter-spec": "^2.1.1",
+    "ts-node": "^8.9.1",
+    "ts-stopwatch": "0.0.4",
+    "tsconfig-paths": "^3.8.0",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.3.0",
+    "xpath-to-css": "^1.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*": [
+      "pretty-quick --staged"
+    ],
+    "*.ts": [
+      "npm run lint"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
